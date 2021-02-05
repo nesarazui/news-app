@@ -1,17 +1,26 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <News v-bind:news="news"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
+import News from './components/News.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    News
+  },
+  data(){
+    return {
+      news: []
+      }
+  },
+  async created() {
+    const response = await axios.get("https://newsapi.org/v2/top-headlines?country=us&apiKey=e446a7bb80ec4d58b4c84fa7c257789b");
+    this.news = response.data.articles;
   }
-}
+  }
 </script>
 
 <style>
